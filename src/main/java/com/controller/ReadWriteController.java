@@ -133,17 +133,38 @@ public class ReadWriteController {
     @GetMapping("LaptopAssertdetails")
     public void LaptopAssertTracker(HttpServletResponse response,@RequestParam String LID,@RequestParam String IBMEmpId,@RequestParam String IBMEmailId,@RequestParam String LaptopishavingIBMnetworkaccess1,
     		@RequestParam String PresentlyinHyderabad1,@RequestParam String CanvisitOffice1,@RequestParam String Expectday1,String Expectday2,String Expectday3,String Expectday4,@RequestParam String City,
-    		@RequestParam String State,@RequestParam String LaptopMake) throws EncryptedDocumentException, InvalidFormatException, IOException{
+    		@RequestParam String State,@RequestParam String LaptopMake) throws Exception{
     	File file = new File(Constants.FILE_NAME1);
     	System.out.println("hello");
+    	System.out.println(LID+IBMEmpId+IBMEmailId);
+    	
+    	if (LID.isEmpty() || IBMEmpId.isEmpty() || IBMEmailId.isEmpty() || City.isEmpty()|| State.isEmpty() ) {
+    		System.out.println("Arbaj");
+
+			throw new Exception();
+    	}
+			
     	try {
+    		
+    			
+    		
     		if (file.exists()) { System.out.println("hello");
     			excelReadWrite.writeLaptopAssertdetails(LID, IBMEmpId, IBMEmailId, LaptopishavingIBMnetworkaccess1, PresentlyinHyderabad1, CanvisitOffice1, Expectday1, Expectday2, Expectday3, Expectday4, City, State, LaptopMake);
     		}
     	} catch (IOException e) {
+    		System.out.println(e);
+    		
+    	/*(IOException | InvalidFormatException e){
     		e.printStackTrace();
+    		System.out.println("Arbaj");
+    	    throw new Exception();*/ 
+    		//return "error";
+    	}catch(Exception e) {
+    		System.out.println("Arbaj");
     	}
-    	byte[] bytes = Files.readAllBytes(file.toPath());
+    	//return "Success";
+    
+    	/*byte[] bytes = Files.readAllBytes(file.toPath());
     	 response.setContentType("application/xlsx");
     	response.setHeader("Content-Disposition","inline; filename=LaptopAssertdetails.xls");
     	response.setContentLength(bytes.length);
@@ -153,6 +174,8 @@ public class ReadWriteController {
     	}catch(IOException e) {
     		logger.error("IOException", e );
     	}
-    }
+		
+    }*/
     
+}
 }

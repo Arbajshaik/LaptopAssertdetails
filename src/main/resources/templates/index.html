@@ -94,10 +94,11 @@
  
  
  <div id ="LaptopAssertdetails" class="tabcontent">
+  <h2 align="center"> Getting Westpac Laptop formatted to change to IBM laptop(so that we can access IBM network)</h2>
+ 
  <div class="container">
  <form action='#'>
- <P align="left"> Getting Westpac Laptop formatted to change to IBM laptop(so that we can access IBM network)</p>
-   LID: <input id="LID" type="text" name="LID" >
+   LID: <input id="LID" type="text" name="LID" required>
    IBM Emp Id: <input id="IBMEmpId" type="text" name="Id" >
    IBM Email Id:<input id="IBMEmailId" type="text" name="Email"  >
   <!--   Laptop is having IBM network access : <input id="Laptop is having IBM network access" type="radio" value="yes" name="Laptop is having IBM network access">yes
@@ -154,6 +155,7 @@
                 	  	 
  </form>
  </div>
+ <h5 align="right" >version:ArbajShaik(GH)</h5>
  </div>
  <div id ="LaptopAssertdetailsResponse"></div>
 
@@ -506,6 +508,9 @@ if (this.readyState == 4 && this.status == 200) {
              }
          };
          var LaptopAssertdetailsData = {};
+         //var body = this.responseXML;
+        // console.log(body);
+         //alert(body);
          var LID = document.getElementById("LID").value;
          var IBMEmpId = document.getElementById("IBMEmpId").value;
        //  var IBMEmpId = document.getElementByid("IBMEmpId").value;
@@ -538,7 +543,7 @@ if (this.readyState == 4 && this.status == 200) {
      //console.log(LaptopAssertdetailsData);
          xhttp.onreadystatechange = function() {
         	 if (this.readyState == 4 && this.status == 200) {
-        		a.click();
+        		//a.click();
         	 }
         	 };
        xhttp.open("Get", "http://localhost:9004/LaptopAssertdetails?LID="+LID+"&IBMEmpId="+IBMEmpId
@@ -553,10 +558,32 @@ if (this.readyState == 4 && this.status == 200) {
        		+"&City="+City
     		+"&State="+State
     		+"&LaptopMake="+LaptopMake, true);
+      /*  if(this.status !=200){
+    	   alert("Successfully updated details");
+       }else{
+    	   alert("failed to update details");
+       } */
        
-       xhttp.responseType = "blob";
+      // xhttp.responseType = "blob";
        console.log(LID,IBMEmpId,IBMEmailId,LaptopishavingIBMnetworkaccess1,PresentlyinHyderabad1,CanvisitOffice1,Expectday1,Expectday2,Expectday3,Expectday4,City,State,LaptopMake);
-       xhttp.send();
+      
+      // alert(xhttp.status);
+  	 if (xhttp.readyState === 4 && xhttp.status === 200){
+         alert(xhttp.status, xhttp.responseXml);
+        
+  	 } 
+  	xhttp.onload = function (){
+    	//alert(xhttp.status);
+    	if(xhttp.status===500){
+    		alert("Resubmit the Form");
+            window.open("error.html");
+           }else{
+        	   alert("submitted successfully generated");
+           }
+    	
+    };
+    xhttp.send();
+ 
      }
      
      
